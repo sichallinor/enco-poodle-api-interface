@@ -16,23 +16,23 @@ module.exports =  {
 
 
     getItems(mode=null) {
-        return getInterface(mode).getItems(mode);
+        return this.getInterface(mode).getItems(mode);
     },
 
     getItem(mode=null) {
-        return getInterface(mode).getItem(mode);
+        return this.getInterface(mode).getItem(mode);
     },
 
     updateItem(mode=null) {
-        return getInterface(mode).updateItem(mode);
+        return this.getInterface(mode).updateItem(mode);
     },
 
     createItem(mode=null) {
-        return getInterface(mode).createItem(mode);
+        return this.getInterface(mode).createItem(mode);
     },
 
     deleteItem(mode=null) {
-        return getInterface(mode).deleteItem(mode);
+        return this.getInterface(mode).deleteItem(mode);
     }
 
 
