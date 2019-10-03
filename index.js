@@ -12,7 +12,7 @@ module.exports =  {
         }else if(mode.apitype==="caldav" || mode.apitype==="carddav"){
             return poodleDavInterface;
         }
-    }
+    },
 
 
     getItems(mode=null) {
