@@ -26,7 +26,7 @@
   "homepage": "https://github.com/sichallinor/enco-poodle-api-interface#readme",
   "dependencies": {
     "enco-poodle-crud-interface": "^0.1.10",
-    "enco-poodle-dav-interface": "^0.1.3"
+    "enco-poodle-dav-interface": "^0.1.4"
   },
   "devDependencies": {
     "chai": "^4.2.0",
