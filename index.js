@@ -16,7 +16,12 @@ module.exports =  {
 
 
     getItems(mode=null) {
-        return this.getInterface(mode).getItems(mode);
+        try{
+            return this.getInterface(mode).getItems(mode);
+        }catch(err){
+            console.log("ERROR : ",err);
+            resolve();
+        }
     },
 
     getItem(mode=null) {
