@@ -1,0 +1,31 @@
+{
+  "name": "enco-poodle-api-interface",
+  "version": "0.1.1",
+  "description": "A interface to consume multiple types of API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sichallinor/enco-poodle-api-interface.git"
+  },
+  "keywords": [
+    "API",
+    "CRUD",
+    "DAV",
+    "WEBDAV",
+    "CARDDAV",
+    "CALDAV"
+  ],
+  "author": "Simon Challinor <sdchallinor@gmail.com> (https://tdr-encompass.com/sichallinor)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sichallinor/enco-poodle-api-interface/issues"
+  },
+  "homepage": "https://github.com/sichallinor/enco-poodle-api-interface#readme",
+  "dependencies": {
+    "enco-poodle-crud-interface": "^0.1.10",
+    "enco-poodle-dav-interface": "^0.1.1"
+  }
+}
