@@ -1,6 +1,6 @@
 {
   "name": "enco-poodle-api-interface",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "description": "A interface to consume multiple types of API",
   "main": "index.js",
   "scripts": {
@@ -25,8 +25,7 @@
   },
   "homepage": "https://github.com/sichallinor/enco-poodle-api-interface#readme",
   "dependencies": {
-    "enco-poodle-crud-interface": "^0.1.10",
-    "enco-poodle-dav-interface": "^0.1.5"
+    "chai-as-promised": "^7.1.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

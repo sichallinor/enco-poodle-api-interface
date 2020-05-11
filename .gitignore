@@ -61,4 +61,4 @@ typings/
 .next
 
 # SICHALLINOR : sensitive tests
-test/test_special.js
+test
