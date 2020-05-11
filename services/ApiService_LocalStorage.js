@@ -5,14 +5,12 @@
 // POODLE-MODE IN DEV MODE
 //var Mode = require('enco-poodle-mode');
 //var Mode = require('../../REPO_TDR_ENCO_POODLE_MODE/index.js');
-import { Mode } from '../../REPO_TDR_ENCO_POODLE_MODE/index';
+//import { Mode } from '../../REPO_TDR_ENCO_POODLE_MODE/index';
+//import { Mode } from '../../REPO_TDR_ENCO_POODLE_MODE/index';
 
 //----------------
 // POODLE-UTILS IN DEV MODE
-//var poodleUtils = require('enco-poodle-utils');
-//var poodleUtils = require('../../REPO_TDR_ENCO_POODLE_UTILS/index.js');
-import { poodleUtils } from '../../REPO_TDR_ENCO_POODLE_UTILS/index';
-
+import poodleUtils from 'enco-poodle-utils';
 
 
 //module.exports =  {
