@@ -209,6 +209,7 @@ export default {
                 // IF A PROMISE HAS BEEN RETURNED ... ADD IT
                 // HOWEVER THE updateItems FUNCTION MAY RETURN NULL (nothing to do)
                 if(prom) promises.push(prom);
+
             }
         }catch(err){
             console.log("ERROR : UPDATING ",err.message,mode);
@@ -221,7 +222,11 @@ export default {
             // execute all promises
             return new Promise(function(resolve, reject) {
                 Promise.all(promises).then(function(values) {
-                    resolve(values);
+                    if(values.length===1) {
+                        resolve(values[0])
+                    }else{
+                        resolve(values)
+                    }
                 }).catch(error => { 
                   console.error(error.message)
                   reject();
