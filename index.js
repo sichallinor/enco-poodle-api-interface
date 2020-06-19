@@ -242,6 +242,7 @@ export default {
         //return this.getInterface(mode).updateItems(mode);
         var self = this;
         var promises = [];
+        /*
         if( mode.hasOwnProperty('modes') ){
             // ---------------------------------------
             // get a promise from each child mode
@@ -250,7 +251,7 @@ export default {
                 var prom = this.updateItems(childMode);
                 if(prom) promises.push(prom);
             }
-        }
+        }*/
         // ---------------------------------------
         // and get a promise from this parent mode
         try{
