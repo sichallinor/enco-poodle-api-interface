@@ -51,10 +51,41 @@ export default {
     },
 
 
+
+    authenticateIfNecessary(mode){
+        var interF = this.getInterface(mode);
+        if(interF) return interF.authenticateIfNecessary(mode);
+        return null;
+    },
+
     authenticateWithEmailPassword(mode){
         var interF = this.getInterface(mode);
         if(interF) return interF.authenticateWithEmailPassword(mode);
         return null;
+    },
+
+    loginCheck(mode){
+        var interF = this.getInterface(mode);
+        if(interF) return interF.loginCheck(mode);
+        return null;
+    },
+
+    logout(mode){
+        var interF = this.getInterface(mode);
+        if(interF) return interF.logout(mode);
+        return null;
+    },
+
+    register(mode){
+        var interF = this.getInterface(mode);
+        if(interF) return interF.register(mode);
+        return null;
+    },
+
+
+    setActivity(mode,activityType,value){
+        if(!mode.hasOwnProperty('activity')) mode['activity'] = {}
+        mode.activity[activityType] = value;
     },
 
 
@@ -62,7 +93,7 @@ export default {
         var self = this;
         var promises = [];
 
-        mode['is_reading']=true;
+        this.setActivity(mode,'is_reading',true)
 
         if( mode.mode_type==='items_aggregator' && mode.hasOwnProperty('modes') ){
             // ---------------------------------------
@@ -85,7 +116,8 @@ export default {
             }
         }catch(err){
             console.log("ERROR : ",err);
-            mode['is_reading']=false;
+
+            this.setActivity(mode,'is_reading',false)
             return null;
         }
         
@@ -100,7 +132,7 @@ export default {
                         mode.aggregateChildrensData();
                     }
 
-                    mode['is_reading']=false;
+                    self.setActivity(mode,'is_reading',false)
 
                     if(values.length===1) {
                         resolve(values[0]) // resolve with the result of a single promise
@@ -114,12 +146,13 @@ export default {
                     }else{
                         console.log("API ERROR GETTING DATA")
                     }
-                  mode['is_reading']=false;
+
+                  self.setActivity(mode,'is_reading',false)
                   reject();
                 });
             });
         }else{
-            mode['is_reading']=false;
+            self.setActivity(mode,'is_reading',false)
             return null;
         }
 
@@ -132,7 +165,8 @@ export default {
         var self = this;
         var promises = [];
 
-        mode['is_reading']=true;
+        //mode['is_reading']=true;
+        self.setActivity(mode,'is_reading',true)
 
         if( mode.hasOwnProperty('modes') ){
             // ---------------------------------------
@@ -164,16 +198,18 @@ export default {
             return new Promise(function(resolve, reject) {
                 Promise.all(promises).then(function(values) {
                     //self.aggregateChildrensData(mode);
-                    mode['is_reading']=false;
+                    self.setActivity(mode,'is_reading',false)
                     resolve(values);        
                 }).catch(error => { 
                   console.error(error.message)
-                  mode['is_reading']=false;
+                  //mode['is_reading']=false;
+                  self.setActivity(mode,'is_reading',false)
                   reject();
                 });
             });
         }else{
-            mode['is_reading']=false;
+            //mode['is_reading']=false;
+            self.setActivity(mode,'is_reading',false)
             return null;
         }
 
@@ -287,7 +323,53 @@ export default {
     },
 
     createItem(mode=null) {
-        return this.getInterface(mode).createItem(mode);
+        //return this.getInterface(mode).createItem(mode);
+
+        var self = this;
+        var promises = [];
+
+        /*
+        if( mode.hasOwnProperty('modes') ){
+            // ---------------------------------------
+            // get a promise from each child mode
+            for(var i=0; i<mode.modes.length; i++){
+                var childMode = mode.modes[i];
+                var prom = this.createItem(childMode);
+                if(prom) promises.push(prom);
+            }
+        }*/
+        // ---------------------------------------
+        // and get a promise from this parent mode
+        try{
+            if(mode.mode_type==='items' /*|| !mode.hasOwnProperty('mode_type')*/){
+                var prom = null;
+                var interF = this.getInterface(mode);
+                if(interF) prom = interF.createItem(mode);
+                // IF A PROMISE HAS BEEN RETURNED ... ADD IT
+                // HOWEVER THE updateItems FUNCTION MAY RETURN NULL (nothing to do)
+                if(prom) promises.push(prom);
+            }
+        }catch(err){
+            console.log("ERROR : CREATING ",err.message,mode);
+            //throw "ERROR : UPDATING ITEMS";
+            //return null
+        }
+        
+        if(promises.length>0){
+            // ---------------------------------------
+            // execute all promises
+            return new Promise(function(resolve, reject) {
+                Promise.all(promises).then(function(values) {
+                    resolve(values);
+                }).catch(error => { 
+                  console.error(error )
+                  reject();
+                });
+            });
+        }else{
+            return null;
+        }
+
     },
     // FOR BULK UPDATES (NORMALLY STORED IN "models_bulk")
     createItems(mode=null) {
@@ -306,7 +388,7 @@ export default {
         // ---------------------------------------
         // and get a promise from this parent mode
         try{
-            if(mode.mode_type==='items' || !mode.hasOwnProperty('mode_type')){
+            if(mode.mode_type==='items' /*|| !mode.hasOwnProperty('mode_type')*/){
                 var prom = null;
                 var interF = this.getInterface(mode);
                 if(interF) prom = interF.createItems(mode);
@@ -339,7 +421,52 @@ export default {
 
 
     deleteItem(mode=null) {
-        return this.getInterface(mode).deleteItem(mode);
+        //return this.getInterface(mode).deleteItem(mode);
+
+
+        var self = this;
+        var promises = [];
+        if( mode.hasOwnProperty('modes') ){
+            // ---------------------------------------
+            // get a promise from each child mode
+            for(var i=0; i<mode.modes.length; i++){
+                var childMode = mode.modes[i];
+                var prom = this.deleteItem(childMode);
+                if(prom) promises.push(prom);
+            }
+        }
+        // ---------------------------------------
+        // and get a promise from this parent mode
+        try{
+            if(mode.mode_type==='items' /*|| !mode.hasOwnProperty('mode_type')*/){
+                var prom = null;
+                var interF = this.getInterface(mode);
+                if(interF) prom = interF.deleteItem(mode);
+                // IF A PROMISE HAS BEEN RETURNED ... ADD IT
+                // HOWEVER THE updateItems FUNCTION MAY RETURN NULL (nothing to do)
+                if(prom) promises.push(prom);
+            }
+        }catch(err){
+            console.log("ERROR : CREATING ",err.message,mode);
+            //throw "ERROR : UPDATING ITEMS";
+            //return null
+        }
+        
+        if(promises.length>0){
+            // ---------------------------------------
+            // execute all promises
+            return new Promise(function(resolve, reject) {
+                Promise.all(promises).then(function(values) {
+                    resolve(values);
+                }).catch(error => { 
+                  console.error(error.message)
+                  reject();
+                });
+            });
+        }else{
+            return null;
+        }
+
     }
 
 
