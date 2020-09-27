@@ -1,6 +1,6 @@
 {
   "name": "enco-poodle-api-interface",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "A interface to consume multiple types of API",
   "main": "index.js",
   "scripts": {
